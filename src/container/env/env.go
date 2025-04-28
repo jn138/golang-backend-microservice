@@ -20,6 +20,7 @@ const (
 const (
 	// Base
 	ENV_CONFIG_FILENAME    = ".env." + ENV_DEVELOPMENT
+	ENV_CONFIG_VERSION     = "0.1.0"
 	ENV_CONFIG_SERVER_ENV  = ENV_DEVELOPMENT
 	ENV_CONFIG_SERVER_PORT = "8080"
 
@@ -31,7 +32,7 @@ const (
 
 	// MySQL database
 	ENV_CONFIG_MYSQL_DB_HOST = "db"
-	ENV_CONFIG_MYSQL_DB_USER = "user"
+	ENV_CONFIG_MYSQL_DB_USER = "root"
 	ENV_CONFIG_MYSQL_DB_PASS = "password"
 
 	// Others
@@ -53,6 +54,7 @@ func LoadVariables() {
 
 		// Otherwise, create a sample .env.delopment file
 		newEnvVariables := map[string]string{
+			"VERSION":     ENV_CONFIG_VERSION,
 			"ENVIRONMENT": ENV_CONFIG_SERVER_ENV,
 			"PORT":        ENV_CONFIG_SERVER_PORT,
 

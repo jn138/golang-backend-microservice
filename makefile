@@ -26,6 +26,7 @@ start: test dev
 test:
 	go clean -testcache
 	go test -v ./src/container/...
+	go test -v ./src/dataservice/...
 
 ## build: Build package into a Docker image
 .PHONY: build
