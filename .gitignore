@@ -1,0 +1,4 @@
+/build
+**/.env.**
+**/out.log
+.DS_Store
