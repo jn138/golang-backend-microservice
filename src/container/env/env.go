@@ -33,6 +33,9 @@ const (
 	ENV_CONFIG_MYSQL_DB_HOST = "db"
 	ENV_CONFIG_MYSQL_DB_USER = "user"
 	ENV_CONFIG_MYSQL_DB_PASS = "password"
+
+	// Others
+	ENV_CONFIG_ROLLBAR_ACCESS_TOKEN = ""
 )
 
 func IsEnv(envs ...Env) bool {
@@ -61,10 +64,10 @@ func LoadVariables() {
 			"MYSQL_HOST": ENV_CONFIG_MYSQL_DB_HOST,
 			"MYSQL_USER": ENV_CONFIG_MYSQL_DB_USER,
 			"MYSQL_PASS": ENV_CONFIG_MYSQL_DB_PASS,
+
+			"ROLLBAR_ACCESS_TOKEN": ENV_CONFIG_ROLLBAR_ACCESS_TOKEN,
 		}
 		godotenv.Write(newEnvVariables, ENV_CONFIG_FILENAME)
-
-		// Load the enviroment file
 		godotenv.Load(ENV_CONFIG_FILENAME)
 	}
 }

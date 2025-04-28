@@ -25,7 +25,7 @@ start: test dev
 .PHONY: test
 test:
 	go clean -testcache
-	go test -v ./src/config/...
+	go test -v ./src/container/...
 
 ## build: Build package into a Docker image
 .PHONY: build
