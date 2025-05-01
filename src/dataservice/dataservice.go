@@ -2,8 +2,10 @@ package dataservice
 
 import (
 	"golang-backend-microservice/container/log"
+	Gin "golang-backend-microservice/dataservice/gin"
 	MySql "golang-backend-microservice/dataservice/mysql"
 	Nats "golang-backend-microservice/dataservice/nats"
+	"os"
 	"runtime"
 	"time"
 )
@@ -49,6 +51,10 @@ func EstablishDataService() {
 				log.Debug("Retry in %d seconds...", RETRY_TIMER)
 				time.Sleep(RETRY_TIMER * time.Second)
 			}
+
+			// Set up routes using Gin
+			r := Gin.SetupRoutes(nc)
+			r.Run(":" + os.Getenv("PORT"))
 			break
 		}
 
