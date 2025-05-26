@@ -5,6 +5,7 @@ import (
 	Gin "golang-backend-microservice/dataservice/gin"
 	MySql "golang-backend-microservice/dataservice/mysql"
 	Nats "golang-backend-microservice/dataservice/nats"
+	"golang-backend-microservice/usecase"
 	"os"
 	"runtime"
 	"time"
@@ -54,6 +55,7 @@ func EstablishDataService() {
 
 			// Set up routes using Gin
 			r := Gin.SetupRoutes(nc)
+			usecase.AddBookRoutes(nc, r)
 			r.Run(":" + os.Getenv("PORT"))
 			break
 		}
