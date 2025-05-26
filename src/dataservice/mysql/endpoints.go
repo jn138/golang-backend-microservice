@@ -69,16 +69,35 @@ func InsertRecord(db *sqlx.DB) micro.HandlerFunc {
 		query, args, err := BuildInsertQuery(&data)
 		if err != nil {
 			log.Error(err.Error())
-			// TODO: send Nats response
+			nats.StatusResponse{
+				Status: http.StatusBadRequest,
+				Error:  err.Error(),
+			}.Respond(req)
 			return
 		}
-		results, err := db.Queryx(query, args...)
-		if err != nil {
-			log.Error(err.Error())
-			// TODO: send Nats response
-			return
+
+		switch data.Table {
+		case "Books":
+			results, err := db.Queryx(query, args...)
+			if err != nil {
+				log.Error(err.Error())
+				nats.StatusResponse{
+					Status: http.StatusInternalServerError,
+					Error:  err.Error(),
+				}.Respond(req)
+				return
+			}
+			results.Rows.Close()
+			nats.StatusResponse{
+				Status: http.StatusOK,
+			}.Respond(req)
+		default:
+			log.Error("Error: unknwon table %s", data.Table)
+			nats.StatusResponse{
+				Status: http.StatusNotFound,
+				Error:  fmt.Sprintf("Error: unknown table %s", data.Table),
+			}.Respond(req)
 		}
-		results.Rows.Close()
 	}
 }
 
@@ -89,16 +108,35 @@ func UpdateRecord(db *sqlx.DB) micro.HandlerFunc {
 		query, args, err := BuildUpdateQuery(&data)
 		if err != nil {
 			log.Error(err.Error())
-			// TODO: send Nats response
+			nats.StatusResponse{
+				Status: http.StatusBadRequest,
+				Error:  err.Error(),
+			}.Respond(req)
 			return
 		}
-		results, err := db.Queryx(query, args...)
-		if err != nil {
-			log.Error(err.Error())
-			// TODO: send Nats response
-			return
+
+		switch data.Table {
+		case "Books":
+			results, err := db.Queryx(query, args...)
+			if err != nil {
+				log.Error(err.Error())
+				nats.StatusResponse{
+					Status: http.StatusInternalServerError,
+					Error:  err.Error(),
+				}.Respond(req)
+				return
+			}
+			results.Rows.Close()
+			nats.StatusResponse{
+				Status: http.StatusOK,
+			}.Respond(req)
+		default:
+			log.Error("Error: unknwon table %s", data.Table)
+			nats.StatusResponse{
+				Status: http.StatusNotFound,
+				Error:  fmt.Sprintf("Error: unknown table %s", data.Table),
+			}.Respond(req)
 		}
-		results.Rows.Close()
 	}
 }
 
@@ -109,15 +147,34 @@ func DeleteRecord(db *sqlx.DB) micro.HandlerFunc {
 		query, args, err := BuildDeleteQuery(&data)
 		if err != nil {
 			log.Error(err.Error())
-			// TODO: send Nats response
+			nats.StatusResponse{
+				Status: http.StatusBadRequest,
+				Error:  err.Error(),
+			}.Respond(req)
 			return
 		}
-		results, err := db.Queryx(query, args...)
-		if err != nil {
-			log.Error(err.Error())
-			// TODO: send Nats response
-			return
+
+		switch data.Table {
+		case "Books":
+			results, err := db.Queryx(query, args...)
+			if err != nil {
+				log.Error(err.Error())
+				nats.StatusResponse{
+					Status: http.StatusInternalServerError,
+					Error:  err.Error(),
+				}.Respond(req)
+				return
+			}
+			results.Rows.Close()
+			nats.StatusResponse{
+				Status: http.StatusOK,
+			}.Respond(req)
+		default:
+			log.Error("Error: unknwon table %s", data.Table)
+			nats.StatusResponse{
+				Status: http.StatusNotFound,
+				Error:  fmt.Sprintf("Error: unknown table %s", data.Table),
+			}.Respond(req)
 		}
-		results.Rows.Close()
 	}
 }
