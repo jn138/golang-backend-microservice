@@ -12,7 +12,7 @@ type MySqlReqArgs struct {
 
 type Book struct {
 	ID          int64  `json:"id"`
-	Title       string `json:"titles"`
+	Title       string `json:"title"`
 	Author      string `json:"author"`
 	Genre       string `json:"genre"`
 	Year        int    `json:"year"`

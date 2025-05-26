@@ -17,13 +17,16 @@ func AddBookRoutes(nc *nats.Conn, r *gin.Engine) {
 			Table: "Books",
 		}
 
-		// Add "author" parameter
-		author := c.Query("author")
-		if author != "" {
-			if params.Where == nil {
-				params.Where = make(map[string]any)
+		// Add parameters to the query
+		keys := []string{"title", "author", "genre", "year"}
+		if params.Where == nil {
+			params.Where = make(map[string]any)
+		}
+		for _, key := range keys {
+			val := c.Query(key)
+			if val != "" {
+				params.Where[key] = val
 			}
-			params.Where["author"] = author
 		}
 
 		// Get mysql response from Nats
